@@ -1,0 +1,89 @@
+
+### POSTGRES MIGRATIONS
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+$ python manage.py db init   # creates the migrations folder
+
+*** ONLY RUN THESE TWO ***
+$ python manage.py db migrate
+$ python manage.py db upgrade
+
+    $ python manage.py db --help
+
+- - - - - - - - - - - - IMPORTANT - - - - - - - - - - - -- - - -
+*** MAKE SURE TO ADD "git add migrations" TO GITHUB***
+
+*** ONCE ABOVE CHANGES ARE PUSHED TO GITHUB ***
+
+$ heroku run python manage.py db upgrade
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+
+### PLAY WITH DATABASE:
+(https://stackoverflow.com/questions/24060553/creating-a-database-outside-the-application-context_
+# # context (ctx) to run outside the application (no need to launch the server)
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+heroku run python
+
+from flaskapp import create_app, db
+app = create_app()
+ctx = app.app_context()
+ctx.push()  # start working on database after that command
+
+from flaskapp.models import User
+users = User.query.all()
+len(users) #see how many current users
+user = User.query.filter_by(username='').first()
+for u in users:
+    print(u)
+
+...
+ctx.pop()   # exit from the app
+exit()
+
+
+
+***!!!!!!!!!!!!! NEVER RUN THIS WHILE LOGGED INTO HEROKU !!!!!!!!!!!!***
+*** THIS IS ONLY FOR LOCAL DATABASE ***
+    *** COMMANDS TO RUN HERE ***
+    >>> db.drop_all()
+    >>> db.create_all()
+    >>> db.metadata.clear()   # if error: users already defined in metadata
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+
+### POSTGRES:
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+psql
+\list
+\connect datafied
+\dt
+\list
+SELECT * FROM user;
+\q (quit psql)
+
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+
+### RANDOM COMMANDS
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+$ pip freeze > requirements.txt
+
+$ git checkout -b "branch-name"   # -b makes branch
+
+$ nano .bash_profile # to get environment vars must be in home dir
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+
+### COREY SCHAFER FLASK YOUTUBE VIDEOS
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# VIDEO 10 -> using packages to structure Flask app
+# VIDEO 11 -> moving to blueprints to structure Flask app
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+Error you get if you delete the migrations folder
+https://stackoverflow.com/questions/32311366/alembic-util-command-error-cant-find-identifier
