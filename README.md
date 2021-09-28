@@ -1,3 +1,3 @@
 Note: outdated.
 
-Will require heavy remodeling for modern API server.
+Will require heavy remodeling to function as a modern server.
